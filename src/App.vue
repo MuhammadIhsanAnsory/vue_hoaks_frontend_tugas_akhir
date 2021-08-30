@@ -1,32 +1,34 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <NavbarGuest  v-if="$router.currentRoute.name.startsWith('guest')"></NavbarGuest> 
+    <NavbarUser v-if="$router.currentRoute.name.startsWith('user')"></NavbarUser>
+    <NavbarAdmin v-if="$router.currentRoute.name.startsWith('admin')"></NavbarAdmin>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Vue from 'vue';
+import VueMeta from  'vue-meta';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
-#nav {
-  padding: 30px;
-}
+import NavbarGuest from './components/NavbarGuest.vue';
+import NavbarUser from './components/NavbarUser.vue';
+import NavbarAdmin from './components/NavbarAdmin.vue';
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+Vue.use(VueMeta); 
+Vue.use(VueToast, {
+  position: 'top-right',
+  duration: 4000,
+});
+export default {
+  name: 'App',
+  metaInfo: {
+    titleTemplate: '%s - HS SABER',
+  },
+  components: {NavbarGuest, NavbarUser, NavbarAdmin},
+};
+</script>
