@@ -2,6 +2,8 @@
   <div>
     <v-container>
       <h1>List Laporan</h1>
+      <v-btn large color="light-blue" dark class="my-5" link to="/panel/aduan/tambah"><v-icon left>add</v-icon> Buat Aduan Baru</v-btn>
+
       <v-card :loading="loading">
         <v-card-text>
           <v-simple-table>
@@ -9,37 +11,40 @@
               <thead>
                 <tr>
                   <th class="text-left">Judul</th>
-                  <th class="text-left">Digunakan Artikel</th>
+                  <th class="text-left">Link Sumber</th>
+                  <th class="text-left">Status</th>
                   <th class="text-left text-center">
                     Aksi <br />
-                    <small>Edit | Hapus</small>
+                    <small>Detail | Edit | Hapus</small>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(report, i) in reports.data" :key="i">
-                  <td>{{ report.name }}</td>
-                  <td>{{ report.posts.length }} artikel</td>
+                  <td>{{ report.title }}</td>
+                  <td>{{ report.link }}</td>
+                  <td>
+                    <v-chip color="light-green darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>task_alt</v-icon>Selesai Diklarifikasi</v-chip>
+                    <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
+                  </td>
                   <td class="text-center">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          class="mx-2"
-                          fab
-                          dark
-                          x-small
-                          color="green"
-                          v-bind="attrs"
-                          v-on="on"
-                          link
-                          :to="`/admin/kategori/edit/${report.id}`"
-                        >
+                        <v-btn class="mx-2" fab dark x-small color="blue" v-bind="attrs" v-on="on" link :to="`/panel/aduan/detail/${report.id}/${report.slug}`" >
+                          <v-icon dark> visibility </v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Detail</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn class="mx-2" fab dark x-small color="green" v-bind="attrs" v-on="on" link :to="`/panel/aduan/edit/${report.id}/${report.slug}`" >
                           <v-icon dark> border_color </v-icon>
                         </v-btn>
                       </template>
                       <span>Edit</span>
                     </v-tooltip>
-                    <v-tooltip bottom v-if="report.posts.length < 1">
+                    <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn class="mx-2" fab dark x-small color="red" v-bind="attrs" v-on="on" @click.prevent="deleteReport(report.id)" >
                           <v-icon dark> delete </v-icon>
@@ -73,6 +78,7 @@
 
 <script>
 import Vue from "vue";
+import axios from 'axios';
 Vue.component("pagination", require("laravel-vue-pagination"));
 
 
@@ -91,9 +97,10 @@ export default {
       },
       pages: [
         {
-          text: "List Kategori",
+          text: "List Aduan Berita",
           disabled: true,
-          to: "/admin/kategori",
+          to: "#!",
+          exact: true
         },
       ],
     };

@@ -48,7 +48,7 @@
       <v-divider></v-divider>
 
       <v-list nav>
-        <v-list-item link to="/panel/dashboard">
+        <v-list-item link to="/panel/aduan">
           <v-list-item-icon>
             <v-icon>dashboard</v-icon>
           </v-list-item-icon>
@@ -60,7 +60,7 @@
         
         <v-list-item link to="#">
           <v-list-item-icon>
-            <v-icon>dashboard</v-icon>
+            <v-icon>person</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>

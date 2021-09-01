@@ -9,9 +9,11 @@ import Register from '@/views/auth/Register.vue';
 
 // user
 import Dashboard from '@/views/user/dashboard/Index.vue';
+import ReportShow from '@/views/user/report/Show.vue';
+import ReportCreate from '@/views/user/report/Create.vue';
 
 // admin
-import DashboardAdmin from '@/views/admin/dashboard/Index.vue';
+import DashboardAdmin from '@/views/admin/dashboard/Index.vue'; 
 
 import NotFound from '@/views/PageNotFound.vue';
 
@@ -19,10 +21,8 @@ Vue.use(VueRouter)
 // middleware 
 const isAdmin = (to, from, next) => {
   if (store.getters['auth/isAdmin']) {
-    console.log('masuk is admin');
     return next()
   } else {
-    console.log(' dilempar ke index euy');
     return next({
       name: "guest.index"
     })
@@ -31,10 +31,8 @@ const isAdmin = (to, from, next) => {
 
 const isUser = (to, from, next) => {
   if (store.getters['auth/isUser']) {
-    console.log('masuk is user');
     return next()
   } else {
-    console.log('masuk dilempar admin');
     return next({
       name: "admin.dashboard"
     })
@@ -71,9 +69,21 @@ const routes = [
   
   // user
   {
-    path: '/panel/dashboard',
-    name: 'user.dashboard',
+    path: '/panel/aduan',
+    name: 'user.report.index',
     component: Dashboard,
+    beforeEnter: isUser
+  },
+  {
+    path: '/panel/aduan/tambah',
+    name: 'user.report.create',
+    component: ReportCreate,
+    beforeEnter: isUser
+  },
+  {
+    path: '/panel/aduan/detail/:id/:slug',
+    name: 'user.report.show',
+    component: ReportShow,
     beforeEnter: isUser
   },
 
