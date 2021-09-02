@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-container>
+    <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
+      <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
+    </v-sheet>
+    <v-container v-else>
       <h1>Tambah Aduan</h1>
       <v-breadcrumbs :items="pages" large ></v-breadcrumbs>
       <v-alert v-if="errors.length > 0" dismissible type="error">
@@ -8,7 +11,7 @@
         </v-alert>
       <v-card :loading="loading">
         <v-card-text>
-            <form ref="form" @submit.prevent="submit">
+            <form ref="form" @submit.prevent="submit" enctype="multipart/form-data">
             <v-text-field
               :disabled="loading"
               v-model="form.title"
@@ -17,10 +20,10 @@
               required
             ></v-text-field>
             <v-textarea
-                label="Isi Berita"
-                v-model="form.content"
-                outlined
-                :rules="rules.required"
+              label="Isi Berita"
+              v-model="form.content"
+              outlined
+              :rules="rules.required"
             ></v-textarea>
              <v-text-field
               :disabled="loading"
@@ -29,28 +32,40 @@
               label="Link Sumber Berita"
               required
             ></v-text-field>
+            <!-- <label for="image">Bukti Gambar Berita</label>
+            <br>
+             <input type="file" id="image" ref="image" v-on:change="handleImageUpload()" accept="image/*" />
+            <br>
+            <br>
+            <label for="image">Bukti Video Berita</label>
+            <br>
+             <input type="file" id="video" ref="video" v-on:change="handleVideoUpload()" accept="video/*" />
+            <br>
+            <br> -->
             <v-file-input
                 label="Gambar Bukti Berita"
-                multiple
-                ref="images"
-                @change="onFileChange"
+                ref="image"
                 counter
-              :rules="rules.required"
-                 accept="image/*"
+                accept="image/*"
+                v-model="form.images"
                 show-size
+                :rules="rules.required"
                 filled
-                prepend-icon="mdi-camera"
-            ></v-file-input>
-            <v-file-input
-                label="Video Bukti Berita (opsional)"
                 multiple
-                ref="video"
-                counter
-                accept="video/*"
-                show-size
-                filled
-                prepend-icon="videocam"
+                prepend-icon="camera"
             ></v-file-input>
+            <br>
+            <label for="video">Video Bukti Berita (opsional)</label>
+            <br>
+            <input
+              type="file"
+              id="video"
+              ref="file"
+              @change="handleVideoUpload"
+              accept="video/*"
+             />
+            <br>
+            <br>
             <v-btn
               color="primary"
               class="mt-5"
@@ -82,9 +97,9 @@ export default {
       skeleton: true,
       loading: false,
       report: {},
-      postFormData: new FormData(),
       errors: [],
-      form: { },
+      form: {
+      },
       pages: [
         {
           text: "List Aduan Berita",
@@ -106,6 +121,7 @@ export default {
       },
       images: [],
     };
+    
   },
   computed: {
     token() {
@@ -115,7 +131,7 @@ export default {
       return {
         header: {
           Authorization: "Bearer " + this.token,
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         },
         crossDomain: true,
       };
@@ -124,38 +140,43 @@ export default {
   methods: {
     async submit() {
         this.loading = true;
-        // let formData = new FormData();
-        // for( var i = 0; i < this.$refs.images.length; i++ ){
-        //     let file = this.$refs.images[i];
-        //     console.log(file);
-        //     formData.append('images[]', file);
-        // }
-        this.postFormData.append('video', this.$refs.video);
-        this.postFormData.append('title', this.form.title);
-        this.postFormData.append('content', this.form.content);
-        this.postFormData.append('link', this.form.link);
+        let formData = new FormData();
+        for( var i = 0; i < this.form.images.length; i++ ){
+            let file = this.form.images[i];
+            formData.append('images[]', file);
+        }
+        formData.append('images', this.form.image);
+        formData.append('video', this.form.video);
+        formData.append('title', this.form.title);
+        formData.append('content', this.form.content);
+        formData.append('link', this.form.link);
+        console.log(this.form.video);
+        console.log(this.form.image);
       await axios
-        .post("/user/report/store/" , this.postFormData, this.config)
+        .post("/user/report/store/" , formData, this.config)
         .then((response) => {
             this.$toast.success('Berhasil menyimpan aduan berita!');
             this.message = response.data.data.message;
             this.skeleton = false;
             this.loading = false;
-            console.log(response.data);
         })
-        // .catch((e) => {
-        //   this.loading = false;
-        //   this.skeleton = false;
-        //   console.log(e);
-        //   this.errors = e.response.errors;
-        // });
+        .catch((e) => {
+          this.loading = false;
+          this.skeleton = false;
+          this.errors = e.response.data.errors;
+        });
     },
-     onFileChange(event) {
-        for(var key in event.target.files){
-            this.postFormData.append('images[]', event.target.files[key]);
-        }
+    // handleImageUpload() {
+    //    this.form.image = this.$refs.image.files[0];
+    // },
+    handleVideoUpload() {
+      this.form.video = this.$refs.file.files[0];
     },
   },
+  created(){
+    this.loading = false;
+    this.skeleton = false;
+  }
 }
 
 

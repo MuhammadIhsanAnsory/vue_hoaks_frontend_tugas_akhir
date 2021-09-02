@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-container>
+    <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
+      <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
+    </v-sheet>
+    <v-container v-else>
       <h1>List Laporan</h1>
       <v-btn large color="light-blue" dark class="my-5" link to="/panel/aduan/tambah"><v-icon left>add</v-icon> Buat Aduan Baru</v-btn>
 
@@ -36,7 +39,7 @@
                       </template>
                       <span>Detail</span>
                     </v-tooltip>
-                    <v-tooltip bottom>
+                    <v-tooltip bottom v-if="report.clarified == 0 || report.clarified == '0' || report.clarified == false">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn class="mx-2" fab dark x-small color="green" v-bind="attrs" v-on="on" link :to="`/panel/aduan/edit/${report.id}/${report.slug}`" >
                           <v-icon dark> border_color </v-icon>
@@ -44,7 +47,7 @@
                       </template>
                       <span>Edit</span>
                     </v-tooltip>
-                    <v-tooltip bottom>
+                    <v-tooltip bottom v-if="report.clarified == 0 || report.clarified == '0' || report.clarified == false">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn class="mx-2" fab dark x-small color="red" v-bind="attrs" v-on="on" @click.prevent="deleteReport(report.id)" >
                           <v-icon dark> delete </v-icon>
@@ -132,6 +135,7 @@ export default {
           this.loading = false;
         })
         .catch((e) => {
+          this.loading = false;
           this.skeleton = false;
           this.errors = e.response;
         });

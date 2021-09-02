@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-container>
+    <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
+      <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
+    </v-sheet>
+    <v-container v-else>
       <h1>List Laporan</h1>
       <v-breadcrumbs
       :items="pages"
@@ -163,6 +166,7 @@ export default {
           this.loading = false;
         })
         .catch((e) => {
+          this.loading = false;
           this.skeleton = false;
           this.errors = e.response;
         });

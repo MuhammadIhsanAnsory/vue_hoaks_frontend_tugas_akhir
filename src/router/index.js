@@ -70,7 +70,7 @@ const routes = [
   // user
   {
     path: '/panel/aduan',
-    name: 'user.report.index',
+    name: 'user.dashboard',
     component: Dashboard,
     beforeEnter: isUser
   },
