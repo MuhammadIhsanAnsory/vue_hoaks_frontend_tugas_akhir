@@ -5,6 +5,7 @@
     <NavbarAdmin v-if="$router.currentRoute.name.startsWith('admin')"></NavbarAdmin>
     <v-main>
       <router-view/>
+      <vue-confirm-dialog></vue-confirm-dialog>
     </v-main>
   </v-app>
 </template>
@@ -14,6 +15,7 @@ import Vue from 'vue';
 import VueMeta from  'vue-meta';
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
+import VueConfirmDialog from "vue-confirm-dialog";
 
 import NavbarGuest from './components/NavbarGuest.vue';
 import NavbarUser from './components/NavbarUser.vue';
@@ -24,6 +26,9 @@ Vue.use(VueToast, {
   position: 'top-right',
   duration: 4000,
 });
+Vue.use(VueConfirmDialog);
+Vue.component("vue-confirm-dialog", VueConfirmDialog.default);
+
 export default {
   name: 'App',
   metaInfo: {

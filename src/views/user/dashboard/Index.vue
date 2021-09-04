@@ -138,6 +138,33 @@ export default {
           this.loading = false;
           this.skeleton = false;
           this.errors = e.response;
+      });
+    },
+    deleteReport(id) {
+        this.$confirm({
+            message: "Hapus aduan ini?",
+            button: {
+            no: "Kembali",
+            yes: "Hapus",
+            },
+            callback: (confirm) => {
+            if (confirm) {
+                this.loading = true;
+                axios
+                .delete(`/user/report/destroy/${id}`)
+                .then((response) => {
+                    this.$toast.warning("Aduan telah dihapus!");
+                    this.message = response.data.message;
+                    this.getReport();
+                    this.loading = false;
+                })
+                .catch((e) => {
+                    this.errors = e.response.data.message;
+                    this.skeleton = false;
+                    this.loading = false;
+                });
+            }
+            },
         });
     },
   },

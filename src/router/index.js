@@ -11,6 +11,7 @@ import Register from '@/views/auth/Register.vue';
 import Dashboard from '@/views/user/dashboard/Index.vue';
 import ReportShow from '@/views/user/report/Show.vue';
 import ReportCreate from '@/views/user/report/Create.vue';
+import ReportEdit from '@/views/user/report/Edit.vue';
 
 // admin
 import DashboardAdmin from '@/views/admin/dashboard/Index.vue'; 
@@ -84,6 +85,12 @@ const routes = [
     path: '/panel/aduan/detail/:id/:slug',
     name: 'user.report.show',
     component: ReportShow,
+    beforeEnter: isUser
+  },
+  {
+    path: '/panel/aduan/edit/:id/:slug',
+    name: 'user.report.edit',
+    component: ReportEdit,
     beforeEnter: isUser
   },
 

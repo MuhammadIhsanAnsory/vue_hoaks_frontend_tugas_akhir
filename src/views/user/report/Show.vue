@@ -44,8 +44,8 @@
                   <td>:</td>
                   <td>
                       <div v-if="report.hoax != null">
-                            <v-chip color="danger" dark v-if="report.hoax == true || report.hoax == 1 || report.hoax == '1'"><v-icon left>task_alt</v-icon>Hoax</v-chip>
-                            <v-chip color="light-green darken-1" dark v-else><v-icon left>task_alt</v-icon>Fakta</v-chip>
+                            <v-chip large color="red" dark v-if="report.hoax == true || report.hoax == 1 || report.hoax == '1'"><v-icon left>block</v-icon>Hoax</v-chip>
+                            <v-chip large color="light-green darken-1" dark v-else><v-icon left>task_alt</v-icon>Fakta</v-chip>
                       </div>
                         <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
 
@@ -76,24 +76,37 @@
             
         </v-card-text>
       </v-card>
-      <div class="mt-7" v-if="report.clarification != null">
-        <h2>Hasil Klarifikasi</h2>
-        <v-card>
-
-            <v-card-text>
-            <v-simple-table>
-            <template>
-                <tbody>
-                <tr>
-                    <th>Bukti Gambar</th>
-                    <td>:</td>
-                    <td> </td>
-                </tr>
-                </tbody>
-            </template>
-            </v-simple-table>
-            </v-card-text>
-        </v-card>
+      <div class="mt-7" v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'">
+        <section class="mb-7">
+          <h2 class="mb-3">Hasil Klarifikasi</h2>
+          <p>Berikut hasil dari klarifikasi tim Diskominfo Kabupaten Garut mengenai aduan berikut</p>
+        </section>
+        <section class="mb-7">
+          <h3 class="mb-3">Judul Klarifikasi</h3>
+          <p>{{ report.clarification.title }}</p>
+        </section>
+        <section class="mb-7">
+          <h3 class="mb-3">Isi Klarifikasi</h3>
+          <p>{{ report.clarification.content }}</p>
+        </section>
+        <section class="mb-7">
+          <h3 class="mb-3">Link Berita</h3>
+          <v-btn color="orange" x-large link text :to="`//${report.clarification.link}`" target="_blank" block>Buka Link</v-btn>
+        </section>
+        <section class="mb-7">
+          <h3 class="mb-3">Gambar Klarifikasi</h3>
+          <v-row>
+              <v-col lg="3" sm="6" v-for="(image, i) in imagesClarifications" :key="i">
+                  <v-img :src="`http://127.0.0.1:8000/uploads/images/${image}`" width="300px" max-width="100%" />
+              </v-col>
+          </v-row>
+        </section>
+        <section class="mb-7" v-if="report.clarification.video">
+          <h3 class="mb-3">Video Klarifikasi</h3>
+          <v-chip v-if="!report.clarification.video">Tidak disertakan</v-chip>
+          <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.clarification.id}`" target="_blank">Download Video</v-btn>
+        </section>
+       
       </div>
     </v-container>
   </div>
@@ -133,6 +146,7 @@ export default {
         },
       ],
       images: [],
+      imagesClarifications: [],
     };
   },
   computed: {
@@ -154,18 +168,16 @@ export default {
   methods: {
     async getReport() {
       this.loading = true;
-      console.log(this.id);
       await axios
-        .get("/user/report/show/" + this.id, this.config)
-        .then((response) => {
+        .get("/user/report/show/" + this.id, this.config).then((response) => {
           this.report = response.data.data.report;
-          console.log(response.data.data.report);
           this.images = JSON.parse(response.data.data.report.images)
+          if(this.report.clarification.images){
+            this.imagesClarifications = JSON.parse(this.report.clarification.images)
+          }
           this.skeleton = false;
-          console.log(this.report.video);
           this.loading = false;
-        })
-        .catch((e) => {
+        }).catch((e) => {
           this.loading = false;
           this.skeleton = false;
           this.errors = e.response;
