@@ -7,6 +7,7 @@
       <router-view/>
       <vue-confirm-dialog></vue-confirm-dialog>
     </v-main>
+    <Footer  v-if="$router.currentRoute.name.startsWith('guest')"></Footer> 
   </v-app>
 </template>
 
@@ -20,6 +21,7 @@ import VueConfirmDialog from "vue-confirm-dialog";
 import NavbarGuest from './components/NavbarGuest.vue';
 import NavbarUser from './components/NavbarUser.vue';
 import NavbarAdmin from './components/NavbarAdmin.vue';
+import Footer from './components/Footer.vue';
 
 Vue.use(VueMeta); 
 Vue.use(VueToast, {
@@ -34,6 +36,6 @@ export default {
   metaInfo: {
     titleTemplate: '%s - HS SABER',
   },
-  components: {NavbarGuest, NavbarUser, NavbarAdmin},
+  components: {NavbarGuest, NavbarUser, NavbarAdmin, Footer},
 };
 </script>

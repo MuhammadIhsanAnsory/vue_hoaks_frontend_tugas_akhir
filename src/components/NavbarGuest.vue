@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
 
         <v-btn text link to="/">Home</v-btn>
-        <v-btn text link to="#!">List Berita</v-btn>
+        <v-btn text link to="/list-berita">List Berita</v-btn>
         <v-btn text link to="/login">Login</v-btn>
 
     </v-app-bar>

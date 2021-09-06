@@ -2,8 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
 
-//auth
+// guest
 import Home from '@/views/guest/Index.vue';
+import GuestArticleList from '@/views/guest/List.vue';
+import GuestArticleShow from '@/views/guest/Show.vue';
+
+//auth
 import Login from '@/views/auth/Login.vue';
 import Register from '@/views/auth/Register.vue';
 
@@ -47,6 +51,16 @@ const routes = [
     path: '/',
     name: 'guest.index',
     component: Home
+  },
+  {
+    path: '/list-berita',
+    name: 'guest.article.index',
+    component: GuestArticleList
+  },
+  {
+    path: '/list-berita/:id/:slug',
+    name: 'guest.article.show',
+    component: GuestArticleShow
   },
   // auth
   {
