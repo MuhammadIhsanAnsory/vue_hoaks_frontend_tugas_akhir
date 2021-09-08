@@ -39,3 +39,8 @@ export default {
   components: {NavbarGuest, NavbarUser, NavbarAdmin, Footer},
 };
 </script>
+<style>
+  a{
+    text-decoration: none;
+}
+</style>

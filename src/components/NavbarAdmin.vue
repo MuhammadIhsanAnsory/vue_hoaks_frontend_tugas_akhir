@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="grey lighten-5">
+    <v-app-bar color="light-blue darken-4" dark>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <h2>ADMIN</h2>
         <v-spacer></v-spacer>
@@ -32,7 +32,7 @@
     
     <!-- navigasi -->
     <v-navigation-drawer v-model="drawer" absolute
-      temporary dark color="#2d3142">
+      temporary dark color="blue-grey darken-2">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
@@ -48,7 +48,7 @@
       <v-divider></v-divider>
 
       <v-list nav>
-        <v-list-item link to="/dashboard">
+        <v-list-item link to="/admin/dashboard">
           <v-list-item-icon>
             <v-icon>dashboard</v-icon>
           </v-list-item-icon>
@@ -58,13 +58,23 @@
           </v-list-item-content>
         </v-list-item>
         
-        <v-list-item link to="/file">
+        <v-list-item link to="/admin/aduan">
           <v-list-item-icon>
-            <v-icon>folder</v-icon>
+            <v-icon>report</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>File</v-list-item-title>
+            <v-list-item-title>Aduan</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
+        <v-list-item link to="/admin/klarifikasi">
+          <v-list-item-icon>
+            <v-icon>fact_check</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Klarifikasi</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         

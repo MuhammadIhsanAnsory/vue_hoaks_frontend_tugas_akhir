@@ -19,6 +19,10 @@ import ReportEdit from '@/views/user/report/Edit.vue';
 
 // admin
 import DashboardAdmin from '@/views/admin/dashboard/Index.vue'; 
+import ReportIndexAdmin from '@/views/admin/report/Index.vue'; 
+import ReportShowAdmin from '@/views/admin/report/Show.vue'; 
+import ClarificationIndexAdmin from '@/views/admin/clarification/Index.vue';    
+import ClarificationCreateAdmin from '@/views/admin/clarification/Create.vue';    
 
 import NotFound from '@/views/PageNotFound.vue';
 
@@ -79,6 +83,32 @@ const routes = [
     path: '/admin/dashboard',
     name: 'admin.dashboard',
     component: DashboardAdmin,
+    beforeEnter: isAdmin
+  },
+  // // aduan
+  {
+    path: '/admin/aduan',
+    name: 'admin.report.index',
+    component: ReportIndexAdmin,
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/admin/aduan/detail/:id/:slug',
+    name: 'admin.report.show',
+    component: ReportShowAdmin,
+    beforeEnter: isAdmin
+  },
+  // // klarifikasi
+  {
+    path: '/admin/klarifikasi',
+    name: 'admin.clarification.index',
+    component: ClarificationIndexAdmin,
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/admin/klarifikasi/:id/:slug',
+    name: 'admin.clarification.create',
+    component: ClarificationCreateAdmin,
     beforeEnter: isAdmin
   },
   

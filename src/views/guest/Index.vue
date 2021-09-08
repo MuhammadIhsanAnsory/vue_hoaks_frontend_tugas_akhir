@@ -5,7 +5,11 @@
             <v-carousel cycle hide-delimiter-background height="440px">
                 <v-carousel-item v-for="(report,i) in reports" :key="i" :src="`http://127.0.0.1:8000/uploads/images/${imgs[i]}`" reverse-transition="fade-transition" transition="fade-transition" >
                     <v-row class="fill-height mt-14" align="center" justify="center">
-                        <h2 class="display-2 white--text">{{ report.title }}</h2>
+                        <router-link to="#!">
+                            <div class="text-no-wrap secondary" >
+                            <h2 class="display-2 white--text">{{ report.title }}</h2>
+                            </div>
+                        </router-link>
                     </v-row>
                 </v-carousel-item>
             </v-carousel>
@@ -13,38 +17,44 @@
           <v-col lg="4" sm="12">
               <v-row>
                 <v-col cols="12" v-if="reports.length > 0">
-                    <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[0]}`" height="240px" width="100%">
-                        <v-row class="fill-height mt-14" align="center" justify="center">
-                            <h2 class="white--text">{{ reports[0].title }}</h2>
-                        </v-row>
-                    </v-img>
+                    <router-link to="#!">
+                        <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[0]}`" height="240px" width="100%"  gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
+                            <v-row class="fill-height mt-14" align="center" justify="center">
+                                    <h2 class="white--text title">{{ reports[0].title }}</h2>
+                            </v-row>
+                        </v-img>
+                    </router-link>
                 </v-col>
                 <v-col cols="6" v-if="reports.length > 1">
-                    <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[1]}`" height="175" width="100%">
-                         <v-row class="fill-height mt-14" align="center" justify="center">
-                            <h2 class="white--text">{{ reports[1].title }}</h2>
-                        </v-row>
-                    </v-img>
+                    <router-link to="#!">
+                        <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[1]}`" height="175" width="100%" gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
+                            <v-row class="fill-height mt-14" align="center" justify="center">
+                                <h2 class="white--text title">{{ reports[1].title }}</h2>
+                            </v-row>
+                        </v-img>
+                    </router-link>
                 </v-col>
                 <v-col cols="6" v-if="reports.length > 2">
-                    <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[2]}`" height="175"  width="100%">
-                         <v-row class="fill-height mt-14" align="center" justify="center">
-                            <h2 class="white--text">{{ reports[2].title }}</h2>
-                        </v-row>
-                    </v-img>
+                    <router-link to="#!">
+                        <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[2]}`" height="175"  width="100%" gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
+                            <v-row class="fill-height mt-14" align="center" justify="center">
+                                <h2 class="white--text title">{{ reports[2].title }}</h2>
+                            </v-row>
+                        </v-img>
+                    </router-link>
                 </v-col>
 
               </v-row>
           </v-col>
       </v-row>
         <section>
-            <v-container class="py-8">
+            <v-container>
                 <div class="text-center">
                     <h1 class="display-3">Selamat Datang di Hoaks SARA Saber</h1>
                 </div>
             </v-container>
         </section>
-        <section class="py-5">
+        <section class="py-2">
             <v-container>
                 <div class="text-center">
                     <v-chip color="blue lighten-4" text-color="light-blue darken-3">APA ITU HOAKS SARA?</v-chip>
@@ -65,7 +75,7 @@
                 <h3 class="mt-4"></h3>
             </v-container>
         </section>
-        <section class="py-5">
+        <section>
             <v-container>
                 <div class="text-center">
                     <v-chip color="blue lighten-4" text-color="light-blue darken-3">SIAPA KAMI?</v-chip>
@@ -111,7 +121,7 @@
                 <p class="mt-6">Dengan begitu Anda bisa dengan mudah meminta klarifikasi atas berita yang tersebar.</p>
             </v-container>
         </section>
-        <section class="py-12" style="background-color: #0277BD; color: white;">
+        <section style="background-color: #0277BD; color: white;">
             <v-container>
                 <div class="text-center">
                     <v-chip color="blue lighten-4" text-color="light-blue darken-3">CARA PAKAI</v-chip>
@@ -183,7 +193,7 @@
                 </v-row>
             </v-container>
         </section>
-        <section class="py-8">
+        <section>
             <v-container>
                 <div class="text-center">
                     <v-chip color="blue lighten-4" text-color="light-blue darken-3">LIST BERITA</v-chip>
@@ -257,5 +267,8 @@ export default {
 <style scoped>
     p{
         font-size: 20px;
+    }
+    section{
+        padding: 7rem 0;
     }
 </style>
