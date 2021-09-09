@@ -1,13 +1,17 @@
 <template>
   <div>
+    <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
+        <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
+    </v-sheet>
+    <div v-else>
       <v-row>
           <v-col lg="8" sm="12">
             <v-carousel cycle hide-delimiter-background height="440px">
                 <v-carousel-item v-for="(report,i) in reports" :key="i" :src="`http://127.0.0.1:8000/uploads/images/${imgs[i]}`" reverse-transition="fade-transition" transition="fade-transition" >
                     <v-row class="fill-height mt-14" align="center" justify="center">
-                        <router-link to="#!">
+                        <router-link :to="`/berita/detail/${report.id}/${report.slug}`">
                             <div class="text-no-wrap secondary" >
-                            <h2 class="display-2 white--text">{{ report.title }}</h2>
+                            <h2 class="white--text">{{ report.title }}</h2>
                             </div>
                         </router-link>
                     </v-row>
@@ -17,7 +21,7 @@
           <v-col lg="4" sm="12">
               <v-row>
                 <v-col cols="12" v-if="reports.length > 0">
-                    <router-link to="#!">
+                    <router-link :to="`/berita/detail/${reports[0].id}/${reports[0].slug}`">
                         <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[0]}`" height="240px" width="100%"  gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
                             <v-row class="fill-height mt-14" align="center" justify="center">
                                     <h2 class="white--text title">{{ reports[0].title }}</h2>
@@ -26,7 +30,7 @@
                     </router-link>
                 </v-col>
                 <v-col cols="6" v-if="reports.length > 1">
-                    <router-link to="#!">
+                    <router-link :to="`/berita/detail/${reports[1].id}/${reports[1].slug}`">
                         <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[1]}`" height="175" width="100%" gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
                             <v-row class="fill-height mt-14" align="center" justify="center">
                                 <h2 class="white--text title">{{ reports[1].title }}</h2>
@@ -35,7 +39,7 @@
                     </router-link>
                 </v-col>
                 <v-col cols="6" v-if="reports.length > 2">
-                    <router-link to="#!">
+                    <router-link :to="`/berita/detail/${reports[2].id}/${reports[2].slug}`">
                         <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[2]}`" height="175"  width="100%" gradient="to top, rgba(0,0,0,.4), rgba(0,0,0,0)">
                             <v-row class="fill-height mt-14" align="center" justify="center">
                                 <h2 class="white--text title">{{ reports[2].title }}</h2>
@@ -83,7 +87,7 @@
                 </div>
                 <p>Isu SARA (Suku, Ras, dan Agama) merupakan isu yang dalam beberapa tahun ini di Indonesia sedang hangat-hangatnya. Isu ini sangat memberikan dampak yang besar karena ketiga hal itu masih sangat erat kaitannya di kehidupan sehari-hari masyarakat Indonesia. Apalagi ketika isu SARA ini ternyata hoaks atau berita palsu, berita bohong adalah berita yang isinya tidak sesuai dengan kebenaran yang sesungguhnya.</p>
                 <p>Sehingga kami menyediakan web untuk Anda yang ingin mencari berita yang telah di klarifikasi oleh DISKOMINFO KABUPATEN GARUT</p>
-                <v-row>
+                <v-row class="mt-6">
                     <v-col lg="4" sm="12">
                         <v-card class="mx-auto" color="light-blue" dark max-width="400" height="200px">
                             <v-card-title>
@@ -118,7 +122,6 @@
                         </v-card>
                     </v-col>
                 </v-row>
-                <p class="mt-6">Dengan begitu Anda bisa dengan mudah meminta klarifikasi atas berita yang tersebar.</p>
             </v-container>
         </section>
         <section style="background-color: #0277BD; color: white;">
@@ -192,7 +195,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </section>
+        </section> 
         <section>
             <v-container>
                 <div class="text-center">
@@ -200,38 +203,49 @@
                     <h2 class="my-4">Cek Berita Yang Telah Diklarifikasi</h2>
                 </div>
                 <v-row>
-                    <v-col lg="3" sm="12" v-for="(report, i) in reports" :key="i">
+                    <v-col lg="4" sm="12" v-for="(report, i) in reports" :key="i">
                         <v-card>
-                            <v-img
-                            :src="`http://127.0.0.1:8000/uploads/images/${imgs[i]}`"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                            height="200px"
-                            >
-                                <v-card-title v-text="report.title"></v-card-title>
+                            <v-img :src="`http://127.0.0.1:8000/uploads/images/${imgs[i]}`" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="260px" >
+                                <v-card-title>
+                                    <router-link :to="`/berita/detail/${report.id}/${report.slug}`">
+                                        <h3 class="title white--text">{{ report.title }}</h3> 
+                                    </router-link>
+                                    <div>
+                                      <v-chip class="ma-2" color="red" dark label small v-if="report.hoax == true || report.hoax == 1 || report.hoax == '1'">
+                                        <v-icon left> block </v-icon> Hoaks
+                                      </v-chip>
+                                      <v-chip class="ma-2" color="light-green" dark label small v-else>
+                                        <v-icon left> check_circle </v-icon> Fakta
+                                      </v-chip>
+                                      <small>{{ moment(report.created_at).locale('id').format('LLL') }}</small>
+                                    </div>
+                                </v-card-title>
                             </v-img>
-                            <v-card-actions>
-                                <v-btn link text to="#!" color="blue darken-4" block>
-                                    Lihat Detail
-                                </v-btn>
-                            </v-card-actions>
                         </v-card>
                     </v-col>
                 </v-row>
-                <v-btn link to="/list-berita" class="mt-9" color="light-blue" dark block>
+                <v-btn link to="/berita" class="mt-9" color="light-blue" dark block>
                     Lihat Selengkapnya
                 </v-btn>
             </v-container>
         </section>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
+    metaInfo: {
+    title: "Saber"
+  },
     data(){
         return {
+            skeleton: true,
+            loading: true,
+            moment: moment,
             reports: {},
             imgs:[],
             hoaxs: {},

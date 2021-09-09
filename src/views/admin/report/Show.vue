@@ -4,12 +4,21 @@
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
     <v-container v-else>
-      <h1>List Laporan</h1>
+      <h1>Detail Laporan</h1>
       <v-breadcrumbs
       :items="pages"
       large
     ></v-breadcrumbs>
+      <v-btn class="my-5" v-if="report.clarified == 1 || report.clarified == '1' || report.clarified == true " dark color="green" link :to="`/admin/klarifikasi/edit/${report.clarification.id}/${report.clarification.slug}`" >
+        <v-icon dark> border_color </v-icon> Edit Klarifikasi Aduan
+      </v-btn>
+      <v-btn class="my-5" v-else dark color="light-blue lighten-2" link :to="`/admin/klarifikasi/tambah/${report.id}/${report.slug}`" >
+        <v-icon left> fact_check </v-icon> Buat Klarifikasi Sekarang
+      </v-btn>
       <v-card :loading="loading">
+        <v-card-title>
+          Detail Aduan
+        </v-card-title>
         <v-card-text>
           <v-simple-table>
             <template v-slot:default>
@@ -66,8 +75,8 @@
                   <th>Bukti Video</th>
                   <td>:</td>
                   <td>
-                      <v-chip v-if="!report.video">Tidak disertakan</v-chip>
-                       <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.id}/${report.slug}`" target="_blank">Download Video</v-btn>
+                      <v-chip v-if="!report.video || report.video == null">Tidak disertakan</v-chip>
+                       <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${images[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.video}`"></vue-player>
                   </td>
                 </tr>
               </tbody>
@@ -89,9 +98,9 @@
           <h3 class="mb-3">Isi Klarifikasi</h3>
           <div v-html="report.clarification.content"></div>
         </section>
-        <section class="mb-7">
+        <section class="mb-7" v-if="report.clarification.link">
           <h3 class="mb-3">Link Berita</h3>
-          <v-btn color="orange" x-large link text :to="`//${report.clarification.link}`" target="_blank" block>Buka Link</v-btn>
+          <router-link :to="`//${report.clarification.link}`" target="_blank">{{ report.clarification.link }}</router-link>
         </section>
         <section class="mb-7">
           <h3 class="mb-3">Gambar Klarifikasi</h3>
@@ -103,8 +112,9 @@
         </section>
         <section class="mb-7" v-if="report.clarification.video">
           <h3 class="mb-3">Video Klarifikasi</h3>
-          <v-chip v-if="!report.clarification.video">Tidak disertakan</v-chip>
-          <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.clarification.id}/${report.slug}`" target="_blank">Download Video</v-btn>
+          <v-chip v-if="!report.clarification.video">Tidak disertakan </v-chip>
+          <vue-player style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${imagesClarifications[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.clarification.video}`"></vue-player>
+
         </section>
        
       </div>
@@ -115,13 +125,14 @@
 <script>
 import Vue from "vue";
 import axios from 'axios';
+import vuePlayer  from  '@algoz098/vue-player'
 Vue.component("pagination", require("laravel-vue-pagination"));
-
 
 export default {
   metaInfo: {
     title: "List Aduan Berita"
   },
+  components:{ vuePlayer },
   data() {
     return {
       dialog: false,
@@ -166,7 +177,7 @@ export default {
     }
   },
   methods: {
-    async getReport() {
+    async getReports() {
       this.loading = true;
       await axios
         .get("/admin/report/show/" + this.id, this.config).then((response) => {
@@ -188,7 +199,7 @@ export default {
     },
   },
   created() {
-    this.getReport();
+    this.getReports();
   },
 }
 

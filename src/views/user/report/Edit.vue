@@ -53,7 +53,10 @@
             <br>
             <br>
             <v-chip v-if="!report.video">Video Lama Tidak disertakan</v-chip>
-            <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.id}`" target="_blank">Download Video Lama</v-btn>
+            <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${images[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.video}`"></vue-player>
+
+          
+
             <br>
             <br>
             <v-btn
@@ -75,12 +78,14 @@
 
 <script>
 import axios from 'axios';
+import vuePlayer  from  '@algoz098/vue-player'
 
 
 export default {
   metaInfo: {
     title: "Edit Aduan Berita"
   },
+  components:{ vuePlayer },
   data() {
     return {
       dialog: false,

@@ -1,36 +1,39 @@
 <template>
   <div>
-      <v-footer
-    dark
-    padless
-  >
-    <v-card
-      flat
-      tile
-      class="blue-grey darken-4 white--text text-center"
-    >
-      <v-card-text>
-        <v-btn
-          class="mx-4 white--text"
-          icon
-        >
-          <v-icon size="24px">
-              twitter
-          </v-icon>
-        </v-btn>
-      </v-card-text>
+    <v-footer dark padless >
+      <v-card flat tile class="blue-grey darken-4 white--text" >
+      
 
-      <v-card-text class="white--text pt-0">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-      </v-card-text>
+        <v-card-text class="white--text py-15">
+          <v-row>
+            <v-col lg="2" md="12">
+              <div class="text-center">
+                <img src="@/assets/logo-trans.png" width="90px" />
+              </div>
+            </v-col>
+            <v-col lg="6" md="6">
+              <h2 class="mb-5">APLIKASI HOAKS SARA DISKOMINFO KABUPATEN GARUT</h2>
+              <p>Aplikasi Berita Hoaks SARA ini merupakan aplikasi yang bisa menampung keingingan masyarakat untuk mendapatkan klarifikasi dari Diskominfor Kabupaten Garut yang mana Diskominfo Kabupaten Garut adalah lembaga yang menangani dan mengontrol peredaran berita hoaks di Kabupaten Garut</p>
+            </v-col>
+            <v-col lg="4" md="6">
+              <h2 class="mb-5">Usefull Links</h2>
+              <router-link to="/" class="white--text subtitle-2 font-weight-medium">Home</router-link>
+              <br>
+              <router-link to="/berita" class="white--text subtitle-2 font-weight-medium">List Berita</router-link>
+              <br>
+              <router-link to="/login" class="white--text subtitle-2 font-weight-medium">Login</router-link>
+              <br>
+              <router-link to="/register" class="white--text subtitle-2 font-weight-medium">Daftar</router-link>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
 
-      <v-divider></v-divider>
-
-      <v-card-text class="white--text">
-        <strong> {{ new Date().getFullYear() }} — Muhamad Ihsan Ansory - 23183017</strong>
-      </v-card-text>
-    </v-card>
-  </v-footer>
+        <v-card-text class="white--text text-center">
+          <strong> {{ new Date().getFullYear() }} &copy; Muhamad Ihsan Ansory - 23183017</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </div>
 </template>
 

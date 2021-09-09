@@ -21,8 +21,10 @@ import ReportEdit from '@/views/user/report/Edit.vue';
 import DashboardAdmin from '@/views/admin/dashboard/Index.vue'; 
 import ReportIndexAdmin from '@/views/admin/report/Index.vue'; 
 import ReportShowAdmin from '@/views/admin/report/Show.vue'; 
+import UserIndexAdmin from '@/views/admin/user/Index.vue'; 
 import ClarificationIndexAdmin from '@/views/admin/clarification/Index.vue';    
 import ClarificationCreateAdmin from '@/views/admin/clarification/Create.vue';    
+import ClarificationEditAdmin from '@/views/admin/clarification/Edit.vue';    
 
 import NotFound from '@/views/PageNotFound.vue';
 
@@ -57,12 +59,12 @@ const routes = [
     component: Home
   },
   {
-    path: '/list-berita',
+    path: '/berita',
     name: 'guest.article.index',
     component: GuestArticleList
   },
   {
-    path: '/list-berita/:id/:slug',
+    path: '/berita/detail/:id/:slug',
     name: 'guest.article.show',
     component: GuestArticleShow
   },
@@ -74,7 +76,7 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'register',
+    name: 'guest.register',
     component: Register
   },
 
@@ -98,6 +100,13 @@ const routes = [
     component: ReportShowAdmin,
     beforeEnter: isAdmin
   },
+  // // user
+  {
+    path: '/admin/user',
+    name: 'admin.user.index',
+    component: UserIndexAdmin,
+    beforeEnter: isAdmin
+  },
   // // klarifikasi
   {
     path: '/admin/klarifikasi',
@@ -106,9 +115,15 @@ const routes = [
     beforeEnter: isAdmin
   },
   {
-    path: '/admin/klarifikasi/:id/:slug',
+    path: '/admin/klarifikasi/tambah/:id/:slug',
     name: 'admin.clarification.create',
     component: ClarificationCreateAdmin,
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/admin/klarifikasi/edit/:id/:slug',
+    name: 'admin.clarification.edit',
+    component: ClarificationEditAdmin,
     beforeEnter: isAdmin
   },
   

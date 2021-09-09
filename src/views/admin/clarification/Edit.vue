@@ -4,7 +4,7 @@
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
     <v-container v-else>
-      <h1>Klarifikasi Aduan</h1>
+      <h1>Edit Klarifikasi Aduan</h1>
       <v-breadcrumbs :items="pages" large ></v-breadcrumbs>
         <v-card>
             <v-card-title>
@@ -35,8 +35,10 @@
                         <th>Status Klarifikasi</th>
                         <td>:</td>
                         <td>
-                            <v-chip color="light-blue darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>task_alt</v-icon>Selesai Diklarifikasi</v-chip>
-                            <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
+                            <v-chip color="light-blue darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'">
+                              <v-icon left> check_circle </v-icon>  Selesai Diklarifikasi
+                            </v-chip>
+                            <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon> Belum Diklarifikasi</v-chip>
                         </td>
                         </tr>
                         <tr>
@@ -44,10 +46,12 @@
                         <td>:</td>
                         <td>
                             <div v-if="report.hoax != null">
-                                    <v-chip large color="red" dark v-if="report.hoax == true || report.hoax == 1 || report.hoax == '1'"><v-icon left>block</v-icon>Hoax</v-chip>
-                                    <v-chip large color="light-green darken-1" dark v-else><v-icon left>task_alt</v-icon>Fakta</v-chip>
+                              <v-chip  color="red" dark v-if="report.hoax == true || report.hoax == 1 || report.hoax == '1'">
+                                <v-icon left> block </v-icon>  Hoax
+                              </v-chip>
+                              <v-chip  color="light-green darken-1" dark v-else> <v-icon left> check_circle </v-icon> Fakta</v-chip>
                             </div>
-                                <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
+                            <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
 
                         </td>
                         </tr>
@@ -56,8 +60,8 @@
                         <td>:</td>
                         <td>
                             <v-row>
-                                <v-col lg="4" sm="6" v-for="(image, i) in images" :key="i">
-                                    <v-img :src="`http://127.0.0.1:8000/uploads/images/${image}`" width="300px" max-width="100%" />
+                                <v-col lg="4" sm="6" v-for="(report_image, i) in reportImages" :key="i">
+                                    <v-img :src="`http://127.0.0.1:8000/uploads/images/${report_image}`" width="300px" max-width="100%" />
                                 </v-col>
                             </v-row>
                         </td>
@@ -67,7 +71,7 @@
                         <td>:</td>
                         <td>
                             <v-chip v-if="!report.video">Tidak disertakan</v-chip>
-                          <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${images[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.video}`"></vue-player>
+                            <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${reportImages[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.video}`"></vue-player>
 
                         </td>
                         </tr>
@@ -78,7 +82,7 @@
         </v-card>
       <v-card class="mt-6" :loading="loading">
         <v-card-title>
-            Buat Klarifikasi
+            Edit Klarifikasi
         </v-card-title>
         <v-card-text>
             <v-alert v-if="errors.length > 0" dismissible type="error">
@@ -104,32 +108,45 @@
             </div>
             <ckeditor :editor-url="editorUrl" v-model="form.content" :config="editorConfig" ></ckeditor>
             <v-text-field
+            class="mt-5"
               :disabled="loading"
               v-model="form.link"
               :rules="rules.required"
               label="Link Sumber Berita"
               required
             ></v-text-field>
-            <v-file-input
-                label="Gambar Bukti Berita"
-                ref="image"
-                counter
-                accept="image/*"
-                v-model="form.images"
-                show-size
-                :rules="rules.required"
-                filled
-                multiple
-                prepend-icon="camera"
-            ></v-file-input>
+            <v-row>
+                <v-col lg="4" sm="12">
+                    <v-file-input
+                        label="Gambar Bukti Berita"
+                        ref="image"
+                        counter
+                        accept="image/*"
+                        v-model="form.images"
+                        show-size
+                        :rules="rules.required"
+                        filled
+                        multiple
+                        prepend-icon="camera"
+                    ></v-file-input>
+                </v-col>
+                <v-col lg="8" sm="12">
+                    <p>Gambar sebelumnya (akan dihapus jika diupload gambar baru)</p>
+                    <v-row>
+                        <v-col lg="4" sm="6" v-for="(clarificati_image, i) in clarificationImages" :key="i">
+                            <v-img :src="`http://127.0.0.1:8000/uploads/images/${clarificati_image}`" width="300px" max-width="100%" />
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
             <br>
-            <label for="video">Video Bukti Berita (opsional)</label>
+            <label for="video">Video Bukti Berita (juka upload video baru, video lama akan dihapus)</label>
             <br>
             <input type="file" id="video" ref="file" @change="handleVideoUpload" accept="video/*" />
             <br>
             <br>
             <v-btn color="primary" class="mt-5" type="submit" :disabled="loading" :loading="loading" >
-              Simpan Klarifikasi
+              Update Klarifikasi
             </v-btn>
           </form>
         </v-card-text>
@@ -144,17 +161,19 @@ import Vue from "vue";
 import axios from 'axios';
 import CKEditor from "ckeditor4-vue";
 import vuePlayer  from  '@algoz098/vue-player'
+
 Vue.use(CKEditor);
+
 
 export default {
   metaInfo: {
-    title: "Tambah Klarifikasi Aduan"
+    title: "Edit Klarifikasi Aduan"
   },
   components:{ vuePlayer },
   data() {
     return {
       dialog: false,
-      skeleton: true, 
+      skeleton: true,
       loading: false,
       report: {},
       facts: [
@@ -183,7 +202,7 @@ export default {
           exact: true
         },
         {
-          text: "Tambah Klarifikasi Aduan",
+          text: "Edit Klarifikasi Aduan",
           disabled: true,
           to: "#!",
           exact: true
@@ -196,7 +215,8 @@ export default {
       },
       editorConfig: {},
       editorUrl: "https://cdn.ckeditor.com/4.16.0/full/ckeditor.js",
-      images: [],
+      reportImages: [],
+      clarificationImages: [],
     };
     
   },
@@ -218,13 +238,21 @@ export default {
     }
   },
   methods: {
-      async getReport() {
+      async getClarfication() {
       this.loading = true;
       await axios
-        .get("/admin/report/show/" + this.id, this.config).then((response) => {
-          this.report = response.data.data.report;
-          console.log(response.data.data.report);
-          this.images = JSON.parse(response.data.data.report.images)
+        .get("/admin/clarification/show/" + this.id, this.config).then((response) => {
+          this.clarification = response.data.data.clarification;
+          let clarify = response.data.data.clarification;
+          this.report = clarify.report;
+          this.reportImages = JSON.parse(clarify.report.images)
+          this.clarificationImages = JSON.parse(clarify.images)
+          this.form = {
+              title: clarify.title,
+              content: clarify.content,
+              link: clarify.link,
+              hoax: clarify.hoax == 1 || clarify.hoax == '1' ||clarify.hoax == true ? true : false,
+          }
           this.skeleton = false;
           this.loading = false;
         }).catch((e) => {
@@ -243,21 +271,22 @@ export default {
                 formData.append('images[]', file);
             }
         }
-        formData.append('report_id', this.id);
         formData.append('images', this.form.images);
         formData.append('video', this.form.video);
         formData.append('title', this.form.title);
         formData.append('content', this.form.content);
         formData.append('link', this.form.link);
         formData.append('hoax', this.form.hoax);
+        formData.append('_method', 'PUT');
       await axios
-        .post("/admin/clarification/store/" , formData, this.config)
+        .post("/admin/clarification/update/" + this.id  , formData, this.config)
         .then((response) => {
-            this.$toast.success('Berhasil menyimpan klarifikasi aduan berita!');
+            this.$toast.success('Berhasil mengupdate klarifikasi aduan berita!');
             this.message = response.data.data.message;
             this.skeleton = false;
             this.loading = false;
-            this.$router.push(`/admin/aduan/detail/${this.report.id}/${this.report.slug}`);
+            console.log(response.data);
+            // this.$router.push(`/admin/aduan/detail/${this.report.id}/${this.report.slug}`);
         })
         .catch((e) => {
           this.loading = false;
@@ -271,7 +300,7 @@ export default {
     },
   },
   created(){
-    this.getReport();
+    this.getClarfication();
   }
 }
 

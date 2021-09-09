@@ -19,12 +19,10 @@
               label="Judul"
               required
             ></v-text-field>
-            <v-textarea
-              label="Isi Berita"
-              v-model="form.content"
-              outlined
-              :rules="rules.required"
-            ></v-textarea>
+            <div class="mt-5">
+              <label for="content">Isi Berita</label>
+            </div>
+            <ckeditor :editor-url="editorUrl" v-model="form.content" :config="editorConfig" ></ckeditor>
             <v-text-field
               :disabled="loading"
               v-model="form.link"
@@ -32,16 +30,6 @@
               label="Link Sumber Berita"
               required
             ></v-text-field>
-            <!-- <label for="image">Bukti Gambar Berita</label>
-            <br>
-             <input type="file" id="image" ref="image" v-on:change="handleImageUpload()" accept="image/*" />
-            <br>
-            <br>
-            <label for="image">Bukti Video Berita</label>
-            <br>
-             <input type="file" id="video" ref="video" v-on:change="handleVideoUpload()" accept="video/*" />
-            <br>
-            <br> -->
             <v-file-input
                 label="Gambar Bukti Berita"
                 ref="image"
@@ -84,7 +72,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
+import CKEditor from "ckeditor4-vue";
+Vue.use(CKEditor);
 
 
 export default {
@@ -119,6 +110,9 @@ export default {
           (v) => !!v || "Wajib diisi",
         ],
       },
+      editorConfig: {},
+      editorUrl: "https://cdn.ckeditor.com/4.16.0/full/ckeditor.js",
+      reportImages: [],
       images: [],
     };
     

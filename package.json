@@ -7,10 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@algoz098/vue-player": "^0.4.3",
     "axios": "^0.21.1",
     "ckeditor4-vue": "^1.3.2",
     "core-js": "^3.6.5",
     "laravel-vue-pagination": "^2.3.1",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-confirm-dialog": "^1.0.2",
     "vue-meta": "^2.4.0",

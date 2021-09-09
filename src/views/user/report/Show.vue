@@ -4,7 +4,7 @@
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
     <v-container v-else>
-      <h1>List Laporan</h1>
+      <h1>Detail Laporan</h1>
       <v-breadcrumbs
       :items="pages"
       large
@@ -35,7 +35,7 @@
                   <th>Status Klarifikasi</th>
                   <td>:</td>
                   <td>
-                      <v-chip color="light-blue darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>task_alt</v-icon>Selesai Diklarifikasi</v-chip>
+                      <v-chip color="light-blue darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>check_circle</v-icon>Selesai Diklarifikasi</v-chip>
                     <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
                   </td>
                 </tr>
@@ -67,7 +67,7 @@
                   <td>:</td>
                   <td>
                       <v-chip v-if="!report.video">Tidak disertakan</v-chip>
-                       <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.id}`" target="_blank">Download Video</v-btn>
+                      <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${images[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.video}`"></vue-player>
                   </td>
                 </tr>
               </tbody>
@@ -103,8 +103,9 @@
         </section>
         <section class="mb-7" v-if="report.clarification.video">
           <h3 class="mb-3">Video Klarifikasi</h3>
-          <v-chip v-if="!report.clarification.video">Tidak disertakan</v-chip>
-          <v-btn v-else color="blue" text link :to="`//127.0.0.1:8000/report/download-video/${report.clarification.id}`" target="_blank">Download Video</v-btn>
+          <v-chip v-if="!report.clarification.video || report.clarification.video == null">Tidak disertakan</v-chip>
+          <vue-player v-else style="width: 480px; max-width: 90%"  :poster="`http://127.0.0.1:8000/uploads/images/${imagesClarifications[0]}`" :src="`http://127.0.0.1:8000/uploads/videos/${report.clarification.video}`"></vue-player>
+
         </section>
        
       </div>
@@ -115,13 +116,15 @@
 <script>
 import Vue from "vue";
 import axios from 'axios';
-Vue.component("pagination", require("laravel-vue-pagination"));
+import vuePlayer  from  '@algoz098/vue-player'
 
+Vue.component("pagination", require("laravel-vue-pagination"));
 
 export default {
   metaInfo: {
-    title: "List Aduan Berita"
+    title: "Detail Aduan Berita"
   },
+  components:{ vuePlayer },
   data() {
     return {
       dialog: false,

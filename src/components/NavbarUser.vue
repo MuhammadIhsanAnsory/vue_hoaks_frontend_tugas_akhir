@@ -14,12 +14,6 @@
           <v-list-item @click="() => {}">
             <v-list-item-title class="font-weight-bold">Halo, {{ user.name }}!</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="#!">
-            <v-list-item-icon>
-              <v-icon>settings</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Profil</v-list-item-title>
-          </v-list-item>
           <v-list-item @click="dialog = true">
             <v-list-item-icon>
               <v-icon>exit_to_app</v-icon>
@@ -55,16 +49,6 @@
 
           <v-list-item-content>
             <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        
-        <v-list-item link to="#">
-          <v-list-item-icon>
-            <v-icon>person</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Profil</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         
