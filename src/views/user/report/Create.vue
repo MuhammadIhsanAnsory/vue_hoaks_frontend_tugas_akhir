@@ -153,6 +153,7 @@ export default {
             this.message = response.data.data.message;
             this.skeleton = false;
             this.loading = false;
+            this.$router.push('/panel/aduan');
         })
         .catch((e) => {
           this.loading = false;

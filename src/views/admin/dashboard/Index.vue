@@ -4,7 +4,7 @@
       <h1>Dashboard Admin</h1>
       <v-row class="d-flex justify-center mt-5">
         <v-col lg="4" md="6" sm="12">
-           <v-card color="indigo darken-1" dark link to="/admin/pengguna">
+           <v-card color="indigo darken-1" dark link to="/admin/user">
             <div class="text-center pt-4">
               <v-icon large>people</v-icon>
               <h2>Pengguna</h2>

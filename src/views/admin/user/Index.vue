@@ -28,7 +28,7 @@
                   <td>{{ user.email }}</td>
                   <td>{{ user.phone }}</td>
                   <td>
-                    <v-chip color="grey" dark v-if="user.blocked == true || user.blocked == 1 || user.blocked == '1'"><v-icon left>task_alt</v-icon>Diblokir</v-chip>
+                    <v-chip color="grey" dark v-if="user.blocked == true || user.blocked == 1 || user.blocked == '1'"><v-icon left>block</v-icon>Diblokir</v-chip>
                     <v-chip v-else color="light-green darken-1" dark class="my-2"><v-icon left>check</v-icon> Aktif</v-chip>
                   </td>
                   <td class="text-center">

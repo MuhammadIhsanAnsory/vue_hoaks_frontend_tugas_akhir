@@ -13,6 +13,9 @@
           <v-alert v-if="message" type="error">
             <p>{{ message }}</p>
           </v-alert>
+          <v-alert v-if="forbidden" type="error">
+            <p>{{ forbidden }}</p>
+          </v-alert>
           <v-form @submit.prevent="submit" lazy-validation>
             <v-card-text>
                 <v-text-field label="Email" :rules="rules.emailRules" v-model="form.email" :loading="loading" :disabled="disabled"></v-text-field>
@@ -63,6 +66,7 @@ import { mapActions } from "vuex";
           ]
         },
         error: "",
+        forbidden: "",
         message: "",
       }
     },
@@ -72,6 +76,7 @@ import { mapActions } from "vuex";
       }),
       submit(){
         this.error = "";
+        this.forbidden = "";
         this.loading = true;
         this.login(this.form)
         .then(() => {
@@ -81,7 +86,9 @@ import { mapActions } from "vuex";
         })
         .catch(e => {
           this.loading = false;
+          
           this.message = e.response.data.error;
+          this.forbidden = e.response.data.message;
         });
       }
     },

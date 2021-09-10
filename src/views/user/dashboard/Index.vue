@@ -27,8 +27,8 @@
                   <td>{{ report.title }}</td>
                   <td>{{ report.link }}</td>
                   <td>
-                    <v-chip color="light-green darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>task_alt</v-icon>Selesai Diklarifikasi</v-chip>
-                    <v-chip color="blue-grey darken-1" dark v-else><v-icon left>task_alt</v-icon>Belum Diklarifikasi</v-chip>
+                    <v-chip color="light-green darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>check</v-icon>Selesai Diklarifikasi</v-chip>
+                    <v-chip color="blue-grey darken-1" dark v-else><v-icon left>close</v-icon>Belum Diklarifikasi</v-chip>
                   </td>
                   <td class="text-center">
                     <v-tooltip bottom>

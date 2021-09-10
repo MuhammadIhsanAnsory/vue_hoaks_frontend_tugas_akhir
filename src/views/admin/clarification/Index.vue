@@ -31,7 +31,7 @@
                   <td>{{ clarification.user.email }}</td>
                   <td class="text-center">
                     <v-chip color="red darken-1" dark v-if="clarification.hoax == true || clarification.hoax == 1 || clarification.hoax == '1'"><v-icon left>block</v-icon>Hoax</v-chip>
-                    <v-chip color="green" dark v-else><v-icon left>task_alt</v-icon>Fakta</v-chip>
+                    <v-chip color="green" dark v-else><v-icon left>check</v-icon>Fakta</v-chip>
                   </td>
                   <td class="text-center">
                     <v-tooltip bottom>

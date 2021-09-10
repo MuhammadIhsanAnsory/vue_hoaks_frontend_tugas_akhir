@@ -30,7 +30,7 @@
                   <td>{{ report.user.email }}</td>
                   <td>{{ report.link }}</td>
                   <td class="text-center">
-                    <v-chip color="light-green darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>task_alt</v-icon>Selesai Diklarifikasi</v-chip>
+                    <v-chip color="light-green darken-1" dark v-if="report.clarified == true || report.clarified == 1 || report.clarified == '1'"><v-icon left>check</v-icon>Selesai Diklarifikasi</v-chip>
                     <div v-else>
                         <v-chip disabled color="blue-grey darken-1" dark class="my-2"><v-icon left>hourglass_empty</v-icon>Belum Diklarifikasi</v-chip>
                         <v-tooltip bottom>
