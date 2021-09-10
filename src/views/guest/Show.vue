@@ -4,7 +4,7 @@
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
     <v-container v-else>
-      <h1>{{ report.title }}</h1>
+      <h1 class="text-center">{{ report.clarification.title }}</h1>
       <v-breadcrumbs
       :items="pages"
       large
@@ -27,6 +27,13 @@
                   <td>:</td>
                   <td>
                       <div v-html="report.content"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Waktu Pelaporan</th>
+                  <td>:</td>
+                  <td>
+                      {{ moment(report.created_at).locale('id').format('LL') }}
                   </td>
                 </tr>
                 <tr>
@@ -89,6 +96,10 @@
           <p>{{ report.clarification.title }}</p>
         </section>
         <section class="mb-7">
+          <h3 class="mb-3">Waktu Klarifikasi</h3>
+          <p>{{ moment(report.clarification.created_at).locale('id').format('LL') }}</p>
+        </section>
+        <section class="mb-7">
           <h3 class="mb-3">Isi Klarifikasi</h3>
           <div v-html="report.clarification.content"></div>
         </section>
@@ -119,6 +130,7 @@
 <script>
 import Vue from "vue";
 import axios from 'axios';
+import moment from 'moment'
 import vuePlayer  from  '@algoz098/vue-player'
 Vue.component("pagination", require("laravel-vue-pagination"));
 
@@ -131,6 +143,7 @@ export default {
     return {
       dialog: false,
       skeleton: true,
+      moment,
       loading: false,
       report: {},
       form: {

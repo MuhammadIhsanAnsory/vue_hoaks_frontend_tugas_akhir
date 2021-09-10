@@ -2,7 +2,8 @@
   <div>
     <v-app-bar color="grey lighten-5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <h2>HS SABER</h2>
+        <img src="@/assets/logo.png" width="43px" /> <span class="ml-3">APLIKASI HOAKS SARA SABER</span>
+
         <v-spacer></v-spacer>
         <v-menu offset-y bottom transition="scale-transition">
         <template v-slot:activator="{ on, attrs }">
@@ -30,10 +31,10 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            HS SABER
+            <img src="@/assets/logo-trans.png" width="35px" /> HOAKS SARA
           </v-list-item-title>
-          <v-list-item-subtitle>
-              
+          <v-list-item-subtitle class="mt-4">
+              <small class="white--text">Created with <v-icon>favorite</v-icon> <router-link class="white--text" to="//instagram.com/muhammadihsanansory_">Muhamad Ihsan Ansory</router-link></small>
           </v-list-item-subtitle>
 
         </v-list-item-content>
@@ -52,8 +53,17 @@
           </v-list-item-content>
         </v-list-item>
         
+        <v-list-item  @click="dialog = true">
+          <v-list-item-icon>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
-      
+
 
       <template v-slot:append>
         <div class="pa-2">

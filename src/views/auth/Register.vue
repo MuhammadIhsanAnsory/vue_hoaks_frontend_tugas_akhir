@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="bg-gradient">
-      <div class="pt-10"></div>
+    <div class="bg-gradient py-10">
         <v-card class="mx-auto" width="600px" max-width="90%" outlined :loading="loading">
           <v-img src="https://cdn.pixabay.com/photo/2017/02/25/10/11/hoax-2097365_960_720.jpg" width="100%"></v-img>
           <div class="text-center">

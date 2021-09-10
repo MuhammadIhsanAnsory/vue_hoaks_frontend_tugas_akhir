@@ -182,7 +182,6 @@ export default {
       await axios
         .get("/admin/report/show/" + this.id, this.config).then((response) => {
           this.report = response.data.data.report;
-          console.log(response.data.data);
           if(this.report.images){
             this.images = JSON.parse(response.data.data.report.images)
           }

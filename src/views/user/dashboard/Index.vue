@@ -3,9 +3,13 @@
     <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
-    <v-container v-else>
-      <h1>List Laporan</h1>
-      <v-btn large color="light-blue" dark class="my-5" link to="/panel/aduan/tambah"><v-icon left>add</v-icon> Buat Aduan Baru</v-btn>
+    <v-card v-else>
+      <v-card-title>
+        <h1>List Laporan</h1>
+      </v-card-title>
+
+      <v-card-text>
+        <v-btn large color="light-blue" dark class="my-5" link to="/panel/aduan/tambah"><v-icon left>add</v-icon> Buat Aduan Baru</v-btn>
 
       <v-card :loading="loading">
         <v-card-text>
@@ -75,7 +79,9 @@
           align="right"
         ></pagination>
       </div>
-    </v-container>
+      </v-card-text>
+      
+    </v-card>
   </div>
 </template>
 

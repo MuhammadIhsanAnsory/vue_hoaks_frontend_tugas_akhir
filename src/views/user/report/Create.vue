@@ -158,7 +158,8 @@ export default {
         .catch((e) => {
           this.loading = false;
           this.skeleton = false;
-          this.errors = e.response.data.errors;
+          this.errors = e.response
+          console.log(e.response);
         });
     },
     // handleImageUpload() {

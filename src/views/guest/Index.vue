@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <v-sheet class="pa-3" v-if="skeleton" :loading="skeleton">
         <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
     </v-sheet>
@@ -217,7 +217,7 @@
                                       <v-chip class="ma-2" color="light-green" dark label small v-else>
                                         <v-icon left> check_circle </v-icon> Fakta
                                       </v-chip>
-                                      <small>{{ moment(report.created_at).locale('id').format('LLL') }}</small>
+                                      <small>{{ moment(report.created_at).locale('id').format('LL') }}</small>
                                     </div>
                                 </v-card-title>
                             </v-img>

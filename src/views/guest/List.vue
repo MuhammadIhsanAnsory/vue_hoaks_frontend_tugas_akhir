@@ -38,7 +38,7 @@
                                       <v-chip class="ma-2" color="light-green" dark label small v-else>
                                         <v-icon left> check_circle </v-icon> Fakta
                                       </v-chip>
-                                      <small>{{ moment(report.created_at).locale('id').format('LLL') }}</small>
+                                      <small>{{ moment(report.created_at).locale('id').format('LL') }}</small>
                                     </div>
                                 </v-card-title>
                             </v-img>
