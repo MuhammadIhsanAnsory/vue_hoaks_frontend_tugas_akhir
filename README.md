@@ -10,6 +10,7 @@ Ini merupakan aplikasi frontend Aduan Berita Hoax. Yaa fiturnya sih ga wah bange
 - User management (blokir dan buka blokir doang sih admin mah hehe)
 - SPA tentunya :D
 - Menggunakan API dari backend laravel, ini link githubnya : https://github.com/MuhammadIhsanAnsory/laravel_hoaks_backend_tugas_akhir
+- dll
 
 Jangan lupa jalankan dulu backend nya, biar bisa jalan dong API nya xixixi
 
